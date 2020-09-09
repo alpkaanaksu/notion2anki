@@ -3,7 +3,8 @@ import path from 'path'
 
 import { customAlphabet } from 'nanoid'
 
-const PYTHON_INTERPRETER = '/usr/bin/python3'
+# const PYTHON_INTERPRETER = '/usr/bin/python3'
+const PYTHON_INTERPRETER = 'C:\\Users\\alpin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe'
 
 export default class CardGenerator
 
