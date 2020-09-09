@@ -30,6 +30,7 @@ def _wr_apkg(notes, deck_id, deck_name, media_files, desc):
 
 if __name__ == '__main__':
 <<<<<<< HEAD
+<<<<<<< HEAD
     data_file = sys.argv[1]
     deck_id = int(sys.argv[2])
     deck_style = sys.argv[3]
@@ -45,6 +46,23 @@ if __name__ == '__main__':
   color: black;
   background-color: white;
 }
+=======
+  data_file = sys.argv[1]
+  deck_id = int(sys.argv[2])
+  deck_style = sys.argv[3]
+  deck_name = ''
+  # TODO: error handling
+
+  CSS = ""
+  CLOZE_STYLE = """
+  .card {
+    font-family: arial;
+    font-size: 20px;
+    text-align: center;
+    color: black;
+    background-color: white;
+  }
+>>>>>>> parent of d05b031... Add custom style css
 
 .cloze {
   background: rgba(135,131,120,0.15);
@@ -54,6 +72,7 @@ if __name__ == '__main__':
   color: blue;
 }
 
+<<<<<<< HEAD
 .nightMode .cloze {
   color: lightblue;
 }
@@ -194,6 +213,13 @@ color: gray
   }
   """
 
+=======
+  .nightMode .cloze {
+    color: lightblue;
+  }
+  """
+
+>>>>>>> parent of d05b031... Add custom style css
   with open(deck_style, 'r', encoding='utf-8') as file:
     CSS += file.read()
 
@@ -252,12 +278,16 @@ color: gray
       }
     ],
     css=CSS
+<<<<<<< HEAD
+>>>>>>> parent of d05b031... Add custom style css
+=======
 >>>>>>> parent of d05b031... Add custom style css
   )
 
   notes = []
 
   with open(data_file, 'r', encoding='utf-8') as json_file:
+<<<<<<< HEAD
 <<<<<<< HEAD
       data = json.load(json_file)
       deck_name = data['name']
@@ -324,6 +354,8 @@ color: gray
       </style>
     """ % (image)
 =======
+=======
+>>>>>>> parent of d05b031... Add custom style css
     data = json.load(json_file)
     deck_name = data['name']
     emoji = data['icon']
