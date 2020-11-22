@@ -10,8 +10,6 @@ tag contact-page
 					<h1.title> "Contact"
 					<hr>
 					<p.subtitle> "The easiest way to reach me is to send an email to {<a.rounded href="mailto:{contactAdress}"> contactAdress}" 
-					<.notification .has-text-centered>
-						<p.subtitle> "I read my personal inbox every Saturday and see all messages."
 			<.section>					
 				<.container>
 					<h2.title.is-2> "Discord"
@@ -22,6 +20,6 @@ tag contact-page
 			<.section>
 				<.container>
 					<h2.title.is-2> "Twitch"
-					<p.subtitle> "I live stream weekly on my Twitch Channel {<a[bg: #6441a5 c: white br: 0.3rem p: 1 3 td: none] href="https://www.twitch.tv/alemayhu"> "alemayhu"}"
+					<p.subtitle> "I live stream weekly on my Twitch Channel {<a[bg: #6441a5 c: white br: 0.3rem p: 1 3 td: none] href="https://www.twitch.tv/alexanderalemayhu"> "alemayhu"}"
 					<p.subtitle> "This is is a great place to get instant feedback on your problems."
 					<p.subtitle> "Be sure to subscribe so you get a notification when we go live 😉"

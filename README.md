@@ -1,14 +1,39 @@
 # Notion ↦ Anki ⭐️
 
-[![Patreon](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.herokuapp.com%2Falemayhu&style=for-the-badge)](https://patreon.com/alemayhu)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/5da03a4d-2c54-4343-8949-33124d2211e5/deploy-status)](https://app.netlify.com/sites/vibrant-swirles-654fce/deploys) [![Discord](https://img.shields.io/discord/723998078201495642)](https://discord.com/invite/PSKC3uS) [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40aalemayhu)](https://twitter.com/aalemayhu)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/alemayhu)
 
 notion2Anki 💫 is a passion project 🕺🏾💃🏾 We are going to make this a good way to make [Anki](https://apps.ankiweb.net/) flashcards easier, better and faster.
 
 - You can convert your Notion [toggle lists][tl] to Anki cards easily.
 - No technical skills required and 100% free to use by anyone anywhere 🤗
 - Support for embeds, audio files, images and more.
+
+## Sponsors
+
+[![Scrimba.com](dist/sponsors/Scrimba.png)](https://scrimba.com/)  
+
+👩🏼‍🎓👨‍🎓️👨‍🏫️👩🏽‍🏫 [Scrimba](https://scrimba.com) - the mind-blowing way to to code!
+
+## 🎁 Support the Project
+
+> This project is brought to you by our amazing [patrons](http://patreon.com/alemayhu)
+and [GitHub sponsors](https://github.com/sponsors/alemayhu) 🤩 Thank you!
+
+[![Patreon](https://2anki.net/become_a_patron_button.png)](https://patreon.com/alemayhu)
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/W7W6QZNY)
+<a href="https://www.buymeacoffee.com/aalemayhu" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+
+[![GitHub Sponsor](https://img.shields.io/badge/donate-sponsors-ea4aaa.svg?logo=github)](https://github.com/sponsors/alemayhu/)
+[![Paypal](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/alemayhu)
+
+You can also support the project financially and receive exclusive member benefits like ✨
+
+- Access to my Facebook messenger so you can DM me 24/7📱
+- Your name will be added to the BACKERS file on GitHub 🔝
+- Exclusive access to a private channel for supporters 💬
+- Early access to the updates feed on the development 📰
+- Lots of encouragement on your learning journey
+- Personal recorded thank you [video](https://www.youtube.com/playlist?list=PLzOAzzqpDqulq2A-yB0ydn3QgOpXtohkk) 🤳🏾
 
 [tl]: https://www.notion.so/Toggles-c720af26b4bd4789b736c140b2dc73fe
 
@@ -52,33 +77,6 @@ https://www.reddit.com/r/Anki/comments/g29mzk/cards_imported_from_notion/
 The dream is to have a powerful and easy to use process for producing high quality flashcards. Notion is super easy to use and Notion 2 Anki is just going to make the importing process and controlling the look of the cards / decks smooth. This project is a complement to Anki and Notion. See the [projects page][pa] for the specific topics https://github.com/alemayhu/notion2anki/projects/1
 
 [pa]: https://github.com/alemayhu/notion2anki/projects/1
-
-## Contributing
-
-Your contributions are welcome but please try to be constructive and follow the [code of conduct](./CODE_OF_CONDUCT.md).
-
-This project is brought to you by our amazing [patrons](http://patreon.com/alemayhu)
-and [GitHub sponsors](https://github.com/sponsors/alemayhu) 🤩
-
-You can also support the project financially and receive exclusive member benefits like ✨
-
-- Hand crafted motivational messages for your learning journey ✍🏾
-- Your name added to the [BACKERS](./BACKERS.md) file 📠
-- [Personal recorded video](https://www.youtube.com/playlist?list=PLzOAzzqpDqulq2A-yB0ydn3QgOpXtohkk) for you 🤳🏾
-- Private phone calls 🤙🏾
-- See [Patreon](https://patreon.com/alemayhu) for more.
-
-### Other ways to contribute
-
-If you know someone who can benefit from notion2anki, please share it with them today!
-
-- If you are missing a feature or format, let us know on GitHub or the Discord.
-- Make a video in your native language showing people how to use notion2anki
-- Write about notion2anki on your blog
-
-Join the [Discord](https://discord.gg/PSKC3uS) to find out more ways to contribute or send an email to [alexander@alemayhu.com](mailto:alexander@alemayhu.com)
-
-PS: Remember to send us links when you create a video or blog post, thanks 🙏🏾
 
 ## Development
 
@@ -162,6 +160,7 @@ Special thanks to following developers / artistans
                 <b>Marcel Walk</b>
                 </sub></a><br />
                 <a href="#questions" title="Tests">⚠</a>
+                <a href="https://github.com/alemayhu/notion2anki/commits?author=MarcelWalk" title="Code">💻</a>
         </td>
         <!-- Add Henrik (https://github.com/henrik-de), Abi, Boni when you get the necessary information -->
     </tr>

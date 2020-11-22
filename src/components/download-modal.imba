@@ -10,6 +10,18 @@ tag download-modal
 	def pressedIcon
 		showModal = true
 
+	get navigator do window.navigator
+	
+
+	def patreonIntro
+		'https://www.youtube.com/embed/EoB_zj7jeEk'
+	
+	def patreonIntroTitle
+		"Patreon Intro 🧡"		
+
+	def hideModal
+		window.location.href = "/upload"
+
 	<self[d: flex fld: column]>
 		if showModal
 			<.modal[d: flex]>
@@ -17,14 +29,15 @@ tag download-modal
 				<.modal-card>
 					<header.modal-card-head>
 						<p.modal-card-title> title
-						<button.delete aria-label="close" @click.{showModal=false}>
+						<button.delete aria-label="close" @click.hideModal().dismissedModal()>
 					<section.modal-card-body>
 						<.has-text-centered>
-							<p> "This deck is brought to you by our amazing {<a href="https://www.patreon.com/alemayhu"> "patrons"} 🧡"
-							<a[m: 2rem].button.is-primary href=downloadLink @click.didDownload download=deckName> "Click to Download"
-							<youtube-embed video='https://www.youtube.com/embed/EoB_zj7jeEk' title="Patreon Intro 🧡" inline=false>
-							<.has-text-centered>
-								<a.button[bg: rgb(232, 91, 70) c: white border-radius: 0.3rem] target="_blank" href="https://www.patreon.com/alemayhu">
-									<span .icon .is-large>
-										<i.fab.fa-patreon>
-									<span[tt: uppercase fw: bold]> "Become a Patron"							
+							<a[m: 2rem fw: bold].button.is-primary href=downloadLink download=deckName> "Download"
+							<hr>
+							<h3.title .is-3> "Please Support Open Source 🙏🏾"
+							<p> "You can directly support the development and accelerate the improvements!"
+							<p> "Pick your price ranging from {<strong> "$1"}, {<strong> "$2"}, {<strong> "$5"}, {<strong> "$14"} and {<strong> "$100"}."
+							<p> "This deck is brought to you by our amazing {<a href="https://www.patreon.com/alemayhu"> "patrons"} 🤩"
+							<div[p: 1rem mx: 1rem]>
+								<a target="_blank" href="https://www.patreon.com/alemayhu">
+									<img src="become_a_patron_button.png">

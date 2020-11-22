@@ -6,8 +6,6 @@ tag sub-reddit
 	<self>
 		<.column>		
 			<a[bg: #FF5700 c: white] .is-large .tag target="_blank" href=url>
-				<span .icon .is-large>
-					<i .fa-1x .fab.fa-reddit>					
 				<span> name
 
 tag useful-links-page	
@@ -22,7 +20,7 @@ tag useful-links-page
 					<hr>
 					<p.subtitle> "Here are some great resources to help you with your learning journey. Happy learning, my friend 🙂"
 
-					<h3[my: 2rem] .title .is-3> "Refferals"
+					<h3[my: 2rem] .title .is-3> "Referrals"
 					<hr>
 					<p.subtitle> "If you use the links to sign up to {<a href=digitalocean> "DigitalOcean"} or {<a href=skillshare> "Skillshare"} we get a reward 🎁 I am letting you know this for the sake of transparency 😉"
 					<.columns>
@@ -30,8 +28,6 @@ tag useful-links-page
 							<a[bg: #6AB9BE c: white fw: bold] .is-large .tag target="_blank" href=skillshare> "Skillshare"
 						<.column>
 							<a[bg: #008bcf c: white] .is-large .tag target="_blank" href=digitalocean>
-								<span .icon .is-large>
-										<i .fa-1x .fab.fa-digital-ocean>	
 								<span> "DigitalOcean"
 					<h3[my: 2rem] .title .is-3> "YouTube"
 					<hr>
@@ -40,44 +36,41 @@ tag useful-links-page
 						<.column>
 							<a.navbar-item target="_blank" href="https://www.youtube.com/channel/UCVuQ9KPLbb3bfhm-ZYsq-bQ">
 								<span.icon[c: red mx: 1rem]>
-									<i .fa-2x .fab.fa-youtube>							
 								<span> "Alexander Alemayhu"
 						<.column>
 							<a.navbar-item target="_blank" href="https://www.youtube.com/user/MATTvsJapan">
 								<span.icon[c: red mx: 1rem]>
-									<i .fa-2x .fab.fa-youtube>							
 								<span> "Matt vs. Japan"
 						<.column>
 							<a.navbar-item target="_blank" href="https://www.youtube.com/user/Sepharoth64">
 								<span.icon[c: red mx: 1rem]>
-									<i .fa-2x .fab.fa-youtube>							
 								<span> "Ali Abdaal"
 						<.column>
 							<a.navbar-item target="_blank" href="https://www.youtube.com/channel/UC-DExX14VBH75q9Fw7wVbAw">
 								<span.icon[c: red mx: 1rem]>
-									<i .fa-2x .fab.fa-youtube>							
 								<span> "Philipp (German)"
 					
 					<h3[my: 2rem] .title .is-3> "Anki Community"
-					<hr>
 					<p.subtitle> "The Anki community is huge and diverse. You can find lots of stuff around the web but here are some of the things we recommend you to check out."
+					<h4[my: 2rem] .title .is-3> "Reddit"
 					<.columns>
-						<sub-reddit name="Anki" url="https://www.reddit.com/r/Anki/">								
+						<sub-reddit name="r/notion2anki" url="https://www.reddit.com/r/notion2anki/">
+						<sub-reddit name="r/Anki" url="https://www.reddit.com/r/Anki/">
+						<sub-reddit name="r/MedicalSchoolAnki" url="https://www.reddit.com/r/medicalschoolanki/">
+						<sub-reddit name="r/AnkiLatino" url="https://www.reddit.com/r/AnkiLatino/">	
+					
+					<h4[my: 2rem] .title .is-3> "Anki"
+					<.columns>
+						<.column>
+							<a[bg: black c: white] .is-large .tag target="_blank" href="https://apps.ankiweb.net/">
+								<span> "Anki for Desktop"							
 						<.column>
 							<a[bg: #a4c639 c: white] .is-large .tag target="_blank" href="https://play.google.com/store/apps/details?id=com.ichi2.anki">
-								<span .icon .is-large>
-										<i .fa-1x .fab.fa-android>	
-								<span> "AnkiDroid"
+								<span> "Anki for Android"
 						<.column>
 							<a[bg: black c: white] .is-large .tag target="_blank" href="https://apps.apple.com/us/app/ankimobile-flashcards/id373493387">
-								<span .icon .is-large>
-										<i .fa-1x .fab.fa-apple>	
-								<span> "AnkiMobile"
+								<span> "Anki for IOS"
+
 						<.column>
 							<a[bg: black c: white] .is-large .tag target="_blank" href="https://docs.ankiweb.net/#/">
-								<span .icon .is-large>
-										<i .fa-1x .fas.fa-book-reader>	
-								<span> "Anki Manual"
-
-						<sub-reddit name="Medical School Anki" url="https://www.reddit.com/r/medicalschoolanki/">								
-						<sub-reddit name="AnkiLatino" url="https://www.reddit.com/r/AnkiLatino/">
+								<span> "Anki Manual"							

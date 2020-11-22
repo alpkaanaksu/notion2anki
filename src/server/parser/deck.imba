@@ -10,7 +10,6 @@ import {TEMPLATE_DIR, TriggerNoCardsError, TriggerUnsupportedFormat} from '../co
 import CardGenerator from '../service/generator'
 
 String.prototype.replaceAll = do |oldValue, newValue|
-	console.log('replaceAll', oldValue, newValue)
 	unless oldValue != newValue
 		return this
 	let temp = this
@@ -25,7 +24,7 @@ class CustomExporter
 	prop first_deck_name
 	prop workspace
 	prop media
-	
+
 	def constructor first_deck_name, workspace
 		self.first_deck_name = first_deck_name.replace('.html', '')
 		self.workspace = workspace
@@ -37,11 +36,10 @@ class CustomExporter
 		fs.writeFileSync(abs, file)
 	
 	def addCard back, tags
-		console.log('addCard', arguments)
+		self
 
 	def configure payload
 		const payload_info = path.join(self.workspace, 'deck_info.json')		
-		console.log('writing payload', payload_info)
 		fs.writeFileSync(payload_info, JSON.stringify(payload, null, 2))
 
 	def save
@@ -51,28 +49,41 @@ class CustomExporter
 
 export class DeckParser
 
+	prop ga
+
 	get name do self.payload[0].name
 
 	def constructor file_name, settings = {}, files
 		const deckName = settings.deckName
 		const contents = files[file_name]
 		self.settings = settings
-		self.settings['font-size'] = self.settings['font-size'] + 'px'
 		self.use_input = self.enable_input!
 		self.use_cloze = self.is_cloze!
 		self.image = null
 		self.files = files || []
 		self.first_deck_name = file_name
-		self.payload = handleHTML(contents, deckName)
+		self.payload = handleHTML(file_name, contents, deckName)
 
-	def handleHTML contents, deckName = null, decks = []
+	def find_next_page href, file_name
+		let next_file_name = global.decodeURIComponent(href)
+		let pageContent = self.files[next_file_name]
+		const match = Object.keys(self.files).find do $1.match(next_file_name)
+		if match
+			return self.files[match]
+		return pageContent
+					
+	def handleHTML file_name, contents, deckName = null, decks = []
 		const dom = cheerio.load(contents)
 		let name = deckName || dom('title').text()
 		let style = dom('style').html()
+		style = style.replace(/white-space: pre-wrap;/g, '')
+		const isCherry = settings['cherry'] != 'false'
 		let image = null
 		
-		if self.settings['font-size'] != '20px'
-			style += '\n' + '* { font-size:' + self.settings['font-size'] + '}'
+		const fs = self.settings['font-size']
+		if fs and fs != '20px'
+			# TODO: check if fs already has suffix 'px'
+			style += '\n' + '* { font-size:' + self.settings['font-size'] + 'px}'
 
 		let pageCoverImage = dom('.page-cover-image')
 		if pageCoverImage
@@ -89,8 +100,7 @@ export class DeckParser
 					const last = names[end]
 					names[end] = "{pi} {last}"
 					name = names.join("::")
-
-		const toggleList = dom(".page-body > ul").toArray()
+		const toggleList = dom(isCherry ? ".toggle" : ".page-body > ul").toArray()
 		let cards = toggleList.map do |t|
 			// We want to perserve the parent's style, so getting the class
 			const parentUL = dom(t)
@@ -110,13 +120,16 @@ export class DeckParser
 				if summary and toggle
 					const toggleHTML = toggle.html()
 					if toggleHTML
-						let back = toggleHTML.replace(summary, "")
-						return { name: summary.html(), back: back }
-					else
-						console.log('error in (missing valid detailts)', parentUL.html())
+						const n = parentClass ? "<div class='{parentClass}'>{summary.html()}</div>" : summary.html()
+						const b = toggleHTML.replace(summary, "")
+						const note = { name: n, back: b }
+						const cherry = '&#x1F352;' # 🍒
+						if isCherry and !note.name.includes(cherry) and !note.back.includes(cherry)
+							return null
+						else
+							return note												
 		# Prevent bad cards from leaking out
 		cards = cards.filter(Boolean)
-		console.log('cards', cards)
 		cards = sanityCheck(cards)
 
 		decks.push({name: name, cards: cards, image: image, style: style, id: self.generate_id!})
@@ -128,10 +141,9 @@ export class DeckParser
 			const spDom = dom(page)
 			const ref = spDom.find('a').first()
 			const href = ref.attr('href')
-			const pageContent = self.files[global.decodeURIComponent(href)]
-			if pageContent
+			if let pageContent = self.find_next_page(href, file_name)
 				const subDeckName = spDom.find('title').text() || ref.text()
-				self.handleHTML(pageContent, "{name}::{subDeckName}", decks)
+				self.handleHTML(file_name, pageContent, "{name}::{subDeckName}", decks)
 
 		return decks
 
@@ -140,21 +152,17 @@ export class DeckParser
 
 		input.includes('code')
 
+	def valid_input_card input
+		return false if !self.enable_input()
+		input.name and input.name.includes('strong')		
+
 	def sanityCheck cards
 		let empty = cards.find do |x|
-			if !x
-				console.log 'broken card'
-			if !x.name
-				console.log('card is missing name')
 			if !x.back
-				console.log('card is missing back')
 				return has_cloze_deletions(x.name)
 			!x  or !x.name or !x.back
-		if empty
-			console.log('warn Detected empty card, please report bug to developer with an example')
-			console.log('cards', cards)
 		cards.filter do |c|
-			c.name and (has_cloze_deletions(c.name) or c.back)
+			c.name and (has_cloze_deletions(c.name) or c.back or valid_input_card(c))
 
 	// Try to avoid name conflicts and invalid characters by hashing
 	def newUniqueFileName input
@@ -177,7 +185,6 @@ export class DeckParser
 		return new CustomExporter(self.first_deck_name, workspace)
 
 	def embedFile exporter, files, filePath
-		console.log('embedFile', Object.keys(files), filePath)
 		const suffix = self.suffix(filePath)
 		return null if !suffix
 		let file = files["{filePath}"]
@@ -191,7 +198,6 @@ export class DeckParser
 	
 	# https://stackoverflow.com/questions/6903823/regex-for-youtube-id
 	def get_youtube_id input
-		console.log('get_youtube_id', arguments)
 		try
 			const m =  input.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=|\/sandalsResorts#\w\/\w\/.*\/))([^\/&]{10,12})/)
 			# prevent swallowing of soundcloud embeds
@@ -202,7 +208,6 @@ export class DeckParser
 				return null
 	
 	def get_soundcloud_url input
-		console.log('get_soundcloud_url', arguments)
 		try
 			const sre = /https?:\/\/soundcloud\.com\/\S*/gi
 			return input.match(sre)[0].split('">')[0]
@@ -222,12 +227,32 @@ export class DeckParser
 		const dom = cheerio.load(input)
 		const clozeDeletions = dom('code')
 		let mangle = input
-
+		const numbers = [ 
+			'1&#xFE0F;&#x20E3;', # 1️⃣
+			'2&#xFE0F;&#x20E3;', # 2️⃣
+			'3&#xFE0F;&#x20E3;', # 3️⃣
+			'4&#xFE0F;&#x20E3;', # 4️⃣ 
+			'5&#xFE0F;&#x20E3;', # 5️⃣ 
+			'6&#xFE0F;&#x20E3;', # 6️⃣
+			'7&#xFE0F;&#x20E3;', # 7️⃣
+			'8&#xFE0F;&#x20E3;', # 8️⃣
+			'9&#xFE0F;&#x20E3;', # 9️⃣
+			'&#x1F51F;' # 🔟
+		]
 		clozeDeletions.each do |i, elem|
 			const v = dom(elem).html()
-			const old = "<code>{v}</code>"
-			const newValue = '{{c'+(i+1)+'::'+v+'}}'
-			mangle = mangle.replaceAll(old, newValue)		
+			let used_index = false
+			for num of numbers
+				const old = "{num}<code>{v}</code>"
+				const newValue = '{{c'+(numbers.indexOf(num)+1)+'::'+v+'}}'
+				if mangle.match(old)
+					used_index = true
+				mangle = mangle.replaceAll(old, newValue)
+			if not used_index
+				const old = "<code>{v}</code>"
+				const newValue = '{{c'+(i+1)+'::'+v+'}}'
+				mangle = mangle.replaceAll(old, newValue)		
+
 		mangle
 
 	def treatBoldAsInput input, inline=false
@@ -243,41 +268,52 @@ export class DeckParser
 		{mangle: mangle, answer: answer}
 
 	def is_cloze
-		return true if self.settings['card-type'] == "Cloze deletion" 
-		return true if self.settings['card-type'] == 'cloze'
-		return false
+		self.settings['cloze'] != 'false'
 	
 	def enable_input
-		return true if self.settings['card-type'] == 'Enable checking answers'
-		return true if self.settings['card-type'] == 'enable-input'
-		return false
+		self.settings['enable-input'] != 'false'
 
 	def generate_id
 		return parseInt(customAlphabet('1234567890', 16)())
 
+	def locate_tags card
+		let input = [card.name, card.back]
+
+		for i in input
+			continue if not i
+
+			const dom = cheerio.load(i)
+			const deletions = dom('del')
+			
+			deletions.each do |i, elem|
+				const del = dom(elem)
+				card.tags = del.text().split(',').map do $1.trim().replace(/\s/g, '-')
+				card.back = card.back.replaceAll(del.html(), '')
+				card.name = card.name.replaceAll(del.html(), '')
+		return card
+
 	def build
-		console.log('building deck')
 		const workspace = path.join(os.tmpdir(), nanoid())
 		let exporter = self.setupExporter(self.payload[0], workspace)
 	
 		for deck in self.payload
+			deck['empty-deck-desc'] = self.settings['empty-deck-desc'] != 'false'
 			const card_count = deck.cards.length
 			deck.image_count = 0
-			deck.card_type = self.settings['card-type']
+
 			deck.card_count = card_count
 			deck.id = self.generate_id!
-			console.log('set deck id', deck.id)
 			delete deck.style
 
 			# Counter for perserving the order in Anki deck.
 			let counter = 0
 			const addThese = []
 			for card in deck.cards
-				console.log("exporting {deck.name} {deck.cards.indexOf(card)} / {card_count}")
+				card['enable-input'] = self.settings['enable-input'] != 'false'
 				card.number = counter++
 				if self.use_cloze
 					card.name = self.handleClozeDeletions(card.name)
-				elif self.use_input
+				if self.use_input && card.name.includes('<strong>')
 					let inputInfo = self.treatBoldAsInput(card.name)
 					card.name = inputInfo.mangle
 					card.answer = inputInfo.answer
@@ -287,19 +323,17 @@ export class DeckParser
 					const dom = cheerio.load(card.back)
 					const images = dom('img')
 					if images.length > 0
-						console.log('Number of images', images.length)
 						images.each do |i, elem|
 							const originalName = dom(elem).attr('src')
 							if !originalName.startsWith('http')						
 								if let newName = self.embedFile(exporter, self.files, global.decodeURIComponent(originalName))
-									# We have to replace globally since Notion can add the filename as alt value
-									card.back = card.back.replaceAll(originalName, newName)
-									card.media.push(newName)
+									dom(elem).attr('src', newName)
+									card.media.push(newName)						
 						deck.image_count += (card.back.match(/\<+\s?img/g) || []).length
+						card.back = dom.html()
 					
 					if let audiofile = find_mp3_file(card.back)
 						if let newFileName = self.embedFile(exporter, self.files, global.decodeURIComponent(audiofile))
-							console.log('added sound', newFileName)
 							card.back += "[sound:{newFileName}]"
 							card.media.push(newFileName)
 
@@ -312,23 +346,33 @@ export class DeckParser
 						const audio = "<iframe width='100%' height='166' scrolling='no' frameborder='no' src='https://w.soundcloud.com/player/?url={soundCloudUrl}'></iframe>"
 						card.back += audio
 
-					console.log('xparse back', self.use_input)
 					if self.use_cloze
 						# TODO: investigate why cloze deletions are not handled properly on the back / extra
 						card.back = self.handleClozeDeletions(card.back)
-					elif self.use_input
+					if self.use_input and card.back.includes('<strong>')
 						let inputInfo = self.treatBoldAsInput(card.back, true)
 						card.back = inputInfo.mangle
 
-				const tags = card.tags ? {tags: card.tags} : {}
-				const cardType = self.settings['card-type']
-				if cardType == 'basic-reversed'
-						addThese.push({name: card.back, back: card.name, tags: tags, media: card.media, number: counter++})
-				elif cardType == 'reversed'
+				card.tags ||= []
+				if self.settings['tags'] != 'false'
+					card = self.locate_tags(card)
+
+				if self.settings['basic-reversed'] != 'false'
+						addThese.push({name: card.back, back: card.name, tags: card.tags, media: card.media, number: counter++})
+				if self.settings['reversed'] != 'false'
 					const tmp = card.back
 					card.back = card.name
 					card.name = tmp
-			deck.cards = deck.cards.concat(addThese)	
+			deck.cards = deck.cards.concat(addThese)
+
+		self.payload[0].cloze_model_name = self.settings.cloze_model_name
+		self.payload[0].basic_model_name = self.settings.basic_model_name
+		self.payload[0].input_model_name = self.settings.input_model_name
+		self.payload[0].cloze_model_id = self.settings.cloze_model_id
+		self.payload[0].basic_model_id = self.settings.basic_model_id
+		self.payload[0].input_model_id = self.settings.input_model_id
+		self.payload[0].template = self.settings.template
+
 		exporter.configure(self.payload)
 		exporter.save()
 

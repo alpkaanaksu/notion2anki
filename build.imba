@@ -6,7 +6,7 @@ import fs from 'fs'
 # webpack --mode=production
 
 def run cmd, options
-	Promise.new do |resolve, reject|
+	new Promise do |resolve, reject|
 		const wc = spawn(cmd, options)
 		wc.stdout.on('data') do |data|
 			console.log data.toString!
@@ -18,9 +18,9 @@ def run cmd, options
 
 def build_process
 	if !process.env.SKIP_WEBPACK
-		await run('yarn', ['run', 'webpack', '--mode=production'])		  
-	await run('yarn', ['run', 'build-server'])
-
+		await run('./node_modules/.bin/webpack', ['--mode=production'])
+	await run('npm', ['run', 'build-server'])
+	
 def make_pages
 	console.log('skipping make_pages')
 	# TODO: make it dynamic?

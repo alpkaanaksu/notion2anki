@@ -4,76 +4,44 @@ tag home-page
 
 	prop notionLink = "https://www.notion.so/Toggles-c720af26b4bd4789b736c140b2dc73fe"
 	prop contactAdress = "alexander@alemayhu.com"
-	prop tutorial = "https://www.youtube.com/embed/lpC7C9wJoTA"
-
+	prop tutorial = "https://www.youtube.com/embed/NLUfAWA2LJI"
 	prop githubSponsor = "https://github.com/sponsors/alemayhu"
 	prop patreon = "https://patreon.com/alemayhu"
 
 	css .cta bg: #83C9F5 c: white fw: bold
 	css .column m: 16px
 
-	def isDe
-		window.location.host == "2anki.de"
-
-	get heroVideo
-		const id = isDe() ? "E51yLIIS3bk" : "r9pPNl8Mx_Q"
-		"https://www.youtube.com/embed/{id}"
-	
-	get heroVideoTitle 
-		isDe() ? "Philipp: Notion2Anki - Perfekter Workflow für's Lernen!!! 💫" : "How to use cloze deletions in notion2anki 🤩"
-
-
 	def render
-		<self[d: block my: 4rem]>
+		<self[d: block my: 1rem]>
 			<section.hero.is-medium>
 				<div.hero-body>
 					<div.container>
-						<h1 .title .is-size-1> "Create beautiful Anki flashcards faster and easier today ✨"
-						<hr>
-						<h2.subtitle> "Convert Notion toggle lists to Anki Flashcards fast and easy 😉"					
 						<.columns>
 							<.column>
-								<p.subtitle .is-3> "{<strong[fw: bold]> "notion2Anki"} is free and open source."
-								<p.subtitle .is-3> "It's a passion project 🕺🏾💃🏾"
-								<p.subtitle .is-4> "We are making it the easiest and fastest way to create beautiful Anki flashcards easier for anyone anywhere around the world 🌎"
-
-								<div[d: flex j: center a: center mt: 2rem flex-wrap: wrap].columns>
-									<div.column>
-										<a.button[fw: bold] .is-primary .is-large href="/upload"> "Get Started"
-									<div.column>
-										<a.button.is-light .is-large href="https://www.youtube.com/playlist?list=PLzOAzzqpDqukOtwH3IYWiOhr_sjBjfgCd" target="_blank">
-											<span.icon[c: red]>
-												<i.fab.fa-youtube>
-											<span[fw: bold]> "Tutorials"
+								<h1 .title .is-size-1> "Create Anki flashcards ✨"								
+								<h2.subtitle> "Fast, simple, easy and 100% {<span[fw: bold td: underline tdc: green3]> "Free"}"					
+								<p.subtitle .is-4> "It's a passion project 🕺🏾💃🏾"
+								<a.button[fw: bold] .is-primary .is-large href="/upload"> "Get Started"
 							<.column>
+								<p.subtitle .is-4> "We are making it the easiest and fastest way to create beautiful ⭐️ Anki flashcards for anyone anywhere around the world 🌎"
 								<.has-text-centered>
-									<youtube-embed video=heroVideo inline=false title=heroVideoTitle>
-						<.bd-focus[m: 6rem auto 0]>
+									<a.button.is-light .is-large href="https://www.youtube.com/playlist?list=PLzOAzzqpDqukOtwH3IYWiOhr_sjBjfgCd" target="_blank">
+										<span[fw: bold]> "Video Tutorials"
+
+						<.bd-focus[m: 3rem auto 0]>
 							<.columns>
 								<.column .bd-focus-item .has-text-centered>
 									<p .title .is-4> "Free"
 									<p .subtitle .is-6> "The code is on {<strong> "GitHub"}"									
-									<figure .bd-focus-icon>
-										<span .bd-focus.github .icon .is-large>
-											<i.fa-4x.fab.fa-github>
 								<.column .bd-focus-item .has-text-centered>
 									<p .title .is-4> "Fast"
 									<p .subtitle .is-6> "Trade hours for seconds"									
-									<figure .bd-focus-icon>
-										<span .bd-focus.github .icon .is-large>
-											<i .fa-4x .fas .fa-shipping-fast>
 								<.column .bd-focus-item .has-text-centered>
 									<p .title .is-4> "150MB"
 									<p .subtitle .is-6> "Free upload quota"									
-									<figure .bd-focus-icon>
-										<span .bd-focus.github .icon .is-large>
-											<i .fa-4x .fas .fa-file-archive>												
 								<.column .bd-focus-item .has-text-centered>
 									<p .title .is-4> "Friendly"
 									<p .subtitle .is-6> "Join a community of winners 💪🏾"									
-									<figure .bd-focus-icon>
-										<span .bd-focus.github .icon .is-large>
-											<i .fa-4x .fas .fa-splotch>												
 			<.section .bd-tws-home .is-medium[bgc: #F9F9F9 w: 100%]>
 				<header .bd-index-header>
 					<.container>
@@ -86,8 +54,7 @@ tag home-page
 				<.has-text-centered>							
 					<a .button .is-large .is-primary[bg: #3273dc fw: bold white-space: normal fs: 11pt fs@md: 16pt] target="_blank" href="https://discord.gg/PSKC3uS"> "Let's grow the community, join us on Discord 🤗"
 
-			<.section .bd-easy .is-medium>
-			
+			<.section .bd-easy .is-medium>			
 				<.container>
 					<h3 .title .is-3> "Save your {<span[c: #00D1B2]> "time"} today ⏳"
 					<h4 .subtitle .is-4> "Let notion2anki do it in 10 seconds for you"
@@ -96,9 +63,9 @@ tag home-page
 						<a[mt: 2rem fw: bold fs: 16pt].button.is-info.is-medium href="/benefits"> "notion2anki benefits"
 			<.section>
 				<.container>
-					<h2.title> "Video Tutorial: How to use notion2anki"
+					<h2.title> "Video Tutorial: How to turn any website in to Anki flashcards using the Notion Web Clipper with notion2anki"
 					<hr>
-					<p.subtitle> "In this video, {<a[c: #3273dc] href="https://alpkaanaksu.com"> "Alp Kaan"} shows you how to use notion2anki"
+					<p.subtitle> "In this video, {<a[c: #3273dc] href="https://alemayhu.com"> "I"} show you how to use notion2anki"
 					<.has-text-centered>
-						<youtube-embed video=tutorial inline=false title="Video Tutorial: How to use notion2anki" inline=false>
+						<youtube-embed video=tutorial inline=false title="Video Tutorial: How to turn any website in to Anki flashcards using the Notion Web Clipper with notion2anki" inline=false>
 						<a[mt: 2rem].button .is-primary .is-large href="/upload"> "I want to save my time"
